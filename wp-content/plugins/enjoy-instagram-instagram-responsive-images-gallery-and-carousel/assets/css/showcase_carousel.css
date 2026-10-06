@@ -1,0 +1,76 @@
+.ei-showcase .slide-inner {
+	padding: 0 0 20px 0;
+	border-width: 1px;
+	border-style: solid;
+	border-color: #D2D2D2;
+	height: 100%;
+	box-sizing: border-box;
+	width:100%
+}
+
+.ei-showcase .swiper-slide {
+	height:auto!important;
+}
+
+.ei-showcase .enjoy-instagram-ig-picture-wrapper, .enjoy-instagram-ig-username-wrapper {
+	float: left
+}
+
+.ei-showcase .enjoy-instagram-ig-picture-wrapper {
+	margin-right: 10px
+}
+
+.ei-showcase .enjoy-instagram-heart-wrapper {
+	float: left;
+	margin-right: 10px
+}
+
+.ei-showcase .enjoy-instagram-text-wrapper {
+	font-size: 14px;
+	line-height: 1.3em;
+}
+
+.ei-showcase .enjoy-instagram-feed-user {
+	float: left;
+	padding-left: 10px;
+	padding-bottom: 20px
+}
+
+.ei-showcase .enjoy-instagram-icon-wrapper {
+	float: right;
+	padding-right: 10px;
+	padding-bottom: 20px
+}
+
+.ei-showcase .user-ig {
+	font-size: 12px;
+	font-weight: bold;
+	font-family: -apple-system, BlinkMacSystemFont, Roboto, Open Sans, Helvetica Neue, sans-serif;
+}
+
+.ei-showcase .user-ig {
+	color: #000
+}
+
+.ei-showcase .bottom-polaroid {
+	font-size: 14px;
+	padding: 10px 15px 10px 15px
+}
+
+
+.ei-showcase .bottom-polaroid .enjoy-instagram-like-wrapper {
+	margin-bottom: 5px
+}
+
+.ei-showcase .enjoy-instagram-ig-username-wrapper {
+	font-family: -apple-system, BlinkMacSystemFont, Roboto, Open Sans, Helvetica Neue, sans-serif;
+}
+
+.ei-showcase .enjoy-instagram-text-wrapper span {
+	font-family: -apple-system, BlinkMacSystemFont, Roboto, Open Sans, Helvetica Neue, sans-serif;
+}
+
+.ei-showcase .fadein img {
+	opacity: 0.5;
+	transition: 1s ease;
+}

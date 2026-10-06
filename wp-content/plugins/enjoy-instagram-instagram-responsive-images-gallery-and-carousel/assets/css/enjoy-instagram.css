@@ -1,0 +1,170 @@
+.ei-media-type-video {
+	position: relative;
+	cursor: pointer;
+}
+
+.enin-wall .ei-media-type-video {
+	display: block;
+}
+
+.ei-media-type-video:before {
+	position: absolute;
+	right: 10px;
+	color: #fff;
+	content: "\f04b";
+	font-family: 'FontAwesome';
+	z-index: 10;
+	pointer-events: none;
+}
+
+.ei-media-type-video:hover:before {
+	opacity: 1;
+}
+
+/*  15 Novembre 2020 - New lightbox
+Edited by: Vito Caruso */
+
+.fancybox-content {
+	max-width: 600px;
+	width: 100%;
+	position: relative;
+	background: #fff;
+	padding:0;
+}
+.fancybox-content .img-big {
+	max-width: 100%;
+	max-height: 100%;
+	width: auto;
+	height: auto;
+	margin: 0 auto;
+}
+.fancybox-content .caption-container {
+	padding:30px;
+}
+.caption-container .enjoy-instagram-username img {
+	height: 50px;
+	width: 50px;
+	border-radius: 50%;
+}
+.fancybox-container .top-caption {
+	font-size: 16px;
+	text-rendering:optimizeLegibility;
+}
+.fancybox-container .caption-text {
+	font-size: 14px;
+	line-height: 22px;
+	text-rendering:optimizeLegibility;
+}
+
+.enjoy-instagram-username {
+	margin: 10px 0 20px 0;
+}
+.caption-container a {
+	display: inline-block;
+	vertical-align: middle;
+}
+.caption-container .likes_count {
+	margin: 10px 0 10px 0;
+	color:#999;
+	float:right;
+}
+.caption-container .fa {
+	color:#999;
+}
+
+
+.fancybox-caption__body {
+	height: 42px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	display: -webkit-box;
+	cursor: pointer;
+}
+
+.fancybox-caption__body.full-caption {
+	height: auto;
+	display: block;
+	white-space: normal;
+}
+
+.ei-meta-carousel {
+	display: table;
+	width: 100%;
+	height: 100%;
+	position:absolute;
+	left:0;
+	top:0;
+	z-index: 1;
+	background: rgba(0, 0, 0, 0.25);
+}
+
+.ei-meta-grid {
+	display: table;
+	width: 100%;
+	height: 100%;
+	z-index: 1;
+	background: rgba(0, 0, 0, 0.25);
+}
+
+.ei-meta-inner-wrap {
+	display: table-cell;
+	text-align: center;
+	margin: 0 auto;
+	vertical-align: middle;
+	color: #FFF;
+	line-height: normal;
+	text-shadow: 0px 0px 5px rgba(0, 0, 0, 0.8);
+	font-size: 16px;
+}
+
+a.fancybox {
+	text-decoration:none;
+}
+
+.ei-meta span {
+	text-decoration:none;
+}
+.fancybox-navigation {
+	width: 60px;
+}
+.fancybox-navigation span {
+	visibility: visible;
+	opacity: 0.5;
+}
+.fancybox-navigation:hover span {
+	opacity: 1;
+}
+.fancybox-next {
+	right: -60px;
+}
+.fancybox-prev {
+	left: -60px;
+}
+.fancybox-video {
+	width: 100%!important;
+}
+.img-big img {margin:0 auto;}
+
+.likes_count, .enjoy-instagram-username {display:inline-block;}
+
+.likes_count img {
+	display: inline;
+}
+/*  24 Maggio 2021 - Custom syle
+Edited by: Vito Caruso */
+
+.swiper-navigation .swiper-button-prev, .swiper-navigation .swiper-button-next {
+	color: #666;
+}
+
+/* ----------------------------- */
+
+
+@media only screen and (max-width: 600px) {
+	.fancybox-caption {
+		display: none;
+	}
+}
