@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /_stats/
+
+Sitemap: https://www.lesem.info/sitemap.xml

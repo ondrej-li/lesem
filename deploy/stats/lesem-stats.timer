@@ -1,0 +1,10 @@
+[Unit]
+Description=Daily lesem.info visit report
+
+[Timer]
+# After the 00:00 nginx log rotation, so yesterday is in .log.1
+OnCalendar=*-*-* 04:20:00
+Persistent=true
+
+[Install]
+WantedBy=timers.target

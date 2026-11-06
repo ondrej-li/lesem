@@ -1,0 +1,7 @@
+[Unit]
+Description=Rebuild the private lesem.info visit report from the nginx logs
+After=nginx.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/lesem-stats

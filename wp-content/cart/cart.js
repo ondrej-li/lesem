@@ -10,6 +10,8 @@
     var STORAGE_KEY = 'lesem.cart.v1';
     var CUSTOMER_KEY = 'lesem.customer.v1';
     var SHOP_EMAIL = 'katerina@lesem.info';
+    var SHOP_PHONE = '+420606656482';
+    var SHOP_PHONE_LABEL = '+420 606 656 482';
     var CURRENCY = 'Kč';
 
     var CART_ICON = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">' +
@@ -22,6 +24,7 @@
     var toastTimer = null;
     var lastFocus = null;
     var step = 'cart';
+    var lastOrderText = '';
 
     /* ---------- storage ---------- */
 
@@ -199,6 +202,35 @@
         }, 1900);
     }
 
+    /* Clipboard fallback: mobile browsers without a mail client cannot do
+       anything with mailto:, so the order can also be copied and pasted. */
+    function copyText(text, done) {
+        function legacy() {
+            var area = document.createElement('textarea');
+            area.value = text;
+            area.setAttribute('readonly', '');
+            area.style.position = 'fixed';
+            area.style.top = '-1000px';
+            document.body.appendChild(area);
+            area.select();
+            var ok = false;
+            try {
+                ok = document.execCommand('copy');
+            } catch (err) {
+                ok = false;
+            }
+            document.body.removeChild(area);
+            if (done) done(ok);
+        }
+        if (navigator.clipboard && window.isSecureContext) {
+            navigator.clipboard.writeText(text).then(function () {
+                if (done) done(true);
+            }, legacy);
+        } else {
+            legacy();
+        }
+    }
+
     /* ---------- drawer construction ---------- */
 
     function buildPanel() {
@@ -279,8 +311,25 @@
         var sentStep = el('div', 'lesem-cart-step lesem-cart-sent');
         sentStep.setAttribute('data-lesem-step', 'sent');
         sentStep.appendChild(el('p', null, 'Otevřeli jsme Váš e-mailový klient.'));
-        sentStep.appendChild(el('p', 'lesem-cart-hint',
-            'Pokud se neotevřel, zkontrolujte prosím nastavení e-mailu, nebo napište přímo na ' + SHOP_EMAIL + '.'));
+
+        var fallback = el('p', 'lesem-cart-hint');
+        fallback.appendChild(document.createTextNode(
+            'Pokud se neotevřel, zkopírujte si objednávku a pošlete ji z jakékoli pošty na '));
+        var mailLink = el('a', 'lesem-cart-link', SHOP_EMAIL);
+        mailLink.href = 'mailto:' + SHOP_EMAIL;
+        fallback.appendChild(mailLink);
+        fallback.appendChild(document.createTextNode(', nebo zavolejte '));
+        var telLink = el('a', 'lesem-cart-link', SHOP_PHONE_LABEL);
+        telLink.href = 'tel:' + SHOP_PHONE;
+        fallback.appendChild(telLink);
+        fallback.appendChild(document.createTextNode('.'));
+        sentStep.appendChild(fallback);
+
+        var copyOrder = el('button', 'lesem-cart-secondary', 'Kopírovat objednávku');
+        copyOrder.type = 'button';
+        copyOrder.id = 'lesem-cart-copy-order';
+        sentStep.appendChild(copyOrder);
+
         var clearAfter = el('button', 'lesem-cart-secondary', 'Vyprázdnit košík');
         clearAfter.type = 'button';
         clearAfter.id = 'lesem-cart-clear-sent';
@@ -338,10 +387,17 @@
             if (target.closest('[data-lesem-cart-close]')) {
                 close();
                 return;
-            }
-            if (target.id === 'lesem-cart-clear' || target.id === 'lesem-cart-clear-sent') {
+            }            if (target.id === 'lesem-cart-clear' || target.id === 'lesem-cart-clear-sent') {
                 clear();
                 if (target.id === 'lesem-cart-clear-sent') setStep('cart');
+                return;
+            }
+            if (target.id === 'lesem-cart-copy-order') {
+                copyText(lastOrderText, function (ok) {
+                    showToast(ok
+                        ? 'Objednávka zkopírována, vložte ji do e-mailu'
+                        : 'Kopírování se nepovedlo, napište na ' + SHOP_EMAIL);
+                });
                 return;
             }
             if (target.id === 'lesem-cart-checkout') {
@@ -376,6 +432,7 @@
                 poznamka: form.poznamka.value.trim()
             };
             saveCustomer({ jmeno: data.jmeno, email: data.email, telefon: data.telefon });
+            lastOrderText = orderText(data);
             setStep('sent');
             window.location.href = buildMailto(data);
         });
@@ -643,6 +700,13 @@
     /* ---------- order message ---------- */
 
     function buildMailto(customer) {
+        var subject = 'Objednávka z webu lesem.info';
+        return 'mailto:' + SHOP_EMAIL +
+            '?subject=' + encodeURIComponent(subject) +
+            '&body=' + encodeURIComponent(orderText(customer));
+    }
+
+    function orderText(customer) {
         customer = customer || {};
         var lines = [
             'Dobrý den,',
@@ -664,10 +728,7 @@
         if (customer.poznamka) lines.push('Poznámka: ' + customer.poznamka);
         lines.push('');
         lines.push('Odesláno z webu lesem.info');
-        var subject = 'Objednávka z webu lesem.info';
-        return 'mailto:' + SHOP_EMAIL +
-            '?subject=' + encodeURIComponent(subject) +
-            '&body=' + encodeURIComponent(lines.join('\r\n'));
+        return lines.join('\r\n');
     }
 
     /* ---------- init ---------- */
@@ -678,6 +739,18 @@
         enhanceCards();
         enhanceSingle();
         updateBadges();
+
+        /* Copy buttons outside the drawer, e.g. on the contact page. */
+        document.addEventListener('click', function (event) {
+            var btn = event.target.closest('[data-lesem-copy]');
+            if (!btn) return;
+            event.preventDefault();
+            copyText(btn.getAttribute('data-lesem-copy'), function (ok) {
+                showToast(ok
+                    ? 'Zkopírováno do schránky'
+                    : 'Kopírování se nepovedlo, adresa je ' + SHOP_EMAIL);
+            });
+        });
 
         window.addEventListener('storage', function (event) {
             if (event.key === STORAGE_KEY) {

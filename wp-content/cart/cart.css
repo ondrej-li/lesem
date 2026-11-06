@@ -308,6 +308,22 @@
     line-height: 1.45;
 }
 
+.lesem-cart-link,
+.lesem-copy-btn {
+    color: #8a6d1f;
+    text-decoration: underline;
+}
+
+.lesem-copy-btn {
+    display: inline;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: none;
+    font: inherit;
+    cursor: pointer;
+}
+
 .lesem-cart-step {
     display: none;
 }
