@@ -1,0 +1,6 @@
+[Unit]
+Description=Nightly snapshot of the lesem.info nginx/certbot configuration
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/lesem-config-backup
