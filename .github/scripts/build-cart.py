@@ -32,6 +32,10 @@ def asset_version(root):
 
 
 def rel_prefix(rel_path):
+    # 404.html is served for URLs of any depth, so document-relative asset
+    # paths would break there; use root-absolute paths for it.
+    if rel_path == "404.html":
+        return "/"
     return "../" * rel_path.count("/")
 
 
